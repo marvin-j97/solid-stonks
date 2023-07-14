@@ -1,6 +1,7 @@
-import { createSignal, onMount } from "solid-js";
-import SolidStockTable from "./SolidStockTable";
 import { allFakers } from "@faker-js/faker";
+import { createSignal, onMount } from "solid-js";
+
+import SolidStockTable from "./SolidStockTable";
 
 function Market(props: any) {
   const [market, setMarket] = createSignal(
