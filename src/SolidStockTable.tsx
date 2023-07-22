@@ -1,6 +1,15 @@
-import { For } from "solid-js";
+import { For, JSX } from "solid-js";
 
-export default function StockTable(props: { data: any[] }) {
+type Props = {
+  data: {
+    name: string;
+    symbol: string;
+    price: number;
+    delta: number;
+  }[];
+};
+
+export default function StockTable(props: Props): JSX.Element {
   return (
     <table class="border border-gray-200">
       <thead>
@@ -14,31 +23,22 @@ export default function StockTable(props: { data: any[] }) {
         <For each={props.data}>
           {(item) => (
             <tr>
-              <td class="px-3 py-0 border-b border-gray-200 bg-white text-xs">
+              <td class="px-3 py-1 border-b border-gray-200 bg-white text-xs">
                 <p>
                   {item.name} ({item.symbol}) is at ${item.price}
                 </p>
                 <div
                   style={{ width: `${Math.abs(item.delta)}px`, height: "10px" }}
-                  class={item.delta >= 0 ? "bg-green-500" : "bg-red-500"}
-                ></div>
+                  classList={{
+                    rounded: true,
+                    "bg-emerald-500": item.delta >= 0,
+                    "bg-red-500": item.delta < 0,
+                  }}
+                />
               </td>
             </tr>
           )}
         </For>
-        {/* {data.map(({ name, symbol, price, delta }) => (
-          <tr key={name + symbol}>
-            <td class="px-3 py-0 border-b border-gray-200 bg-white text-xs">
-              <p>
-                {name} ({symbol}) is at ${price}
-              </p>
-              <div
-                style={{ width: `${Math.abs(delta)}px`, height: '10px' }}
-                class={delta >= 0 ? 'bg-green-500' : 'bg-red-500'}
-              ></div>
-            </td>
-          </tr>
-        ))} */}
       </tbody>
     </table>
   );
